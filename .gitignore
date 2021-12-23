@@ -8,6 +8,7 @@ modules.order
 peda-session-vmlinux.txt
 q
 .*
+*.o
 
 
 #python#
