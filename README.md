@@ -1,2 +1,0 @@
-# KernelRootfs
-Kernel pwnd

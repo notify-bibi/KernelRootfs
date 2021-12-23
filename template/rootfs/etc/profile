@@ -1,0 +1,13 @@
+# /etc/profile: system-wide .profile file for the Bourne shells
+
+echo -n "Processing /etc/profile... "
+# no-op
+PATH=/bin:/sbin:/usr/bin:/usr/sbin         #可执行程序 环境变量
+export LD_LIBRARY_PATH=/lib:/usr/lib       #动态链接库 环境变量
+USER="`id -un`"
+LOGNAME=$USER
+HOME=`eval echo "~$USER"`
+HOSTNAME=`/bin/hostname`
+PS1='\u@\h: \w\ $ '                         #显示
+
+echo "Done"

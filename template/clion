@@ -1,0 +1,8 @@
+new-ui mi2 /tmp/ptsgdb
+file vmlinux
+source /home/u18/source/linux-4.4.72/vmlinux-gdb.py
+add-auto-load-safe-path /home/u18/source/linux-4.4.72/
+add-auto-load-safe-path /home/u18/env/
+lx-symbols
+add-symbol-file test_src.ko 0xffffffffc0000000
+b test_ioctl

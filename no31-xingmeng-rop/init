@@ -1,0 +1,44 @@
+#!/bin/sh
+
+user=Stupid
+group=gStupid
+UID=1000
+GID=1000
+user_home="/home/${user}"
+
+echo "INIT SCRIPT"
+mkdir /tmp
+mkdir /proc
+mkdir /sys
+
+mount -t proc none /proc
+mount -t sysfs none /sys
+mount -t devtmpfs none /dev
+mount -t debugfs none /sys/kernel/debug
+mount -t tmpfs none /tmp
+mdev -s
+
+insmod /test_src.ko
+chmod 666 /dev/test
+
+echo -e "Boot took $(cut -d' ' -f1 /proc/uptime) seconds"
+
+
+/bin/hostname -F /etc/hostname
+#create group if not exists
+egrep "^$group" /etc/group >& /dev/null
+if [ $? -ne 0 ]
+then
+    /usr/sbin/addgroup $group
+fi
+
+#create user if not exists
+egrep "^$user" /etc/passwd >& /dev/null
+if [ $? -ne 0 ]
+then
+    /usr/sbin/adduser -D -G $group -u $UID -h $user_home $user 
+fi
+
+setsid /bin/cttyhack setuidgid ${user} /bin/sh -l
+
+poweroff -d 0  -f

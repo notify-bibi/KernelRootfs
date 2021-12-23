@@ -1,0 +1,17 @@
+#! /bin/sh
+/bin/mount -n -t ramfs ramfs /var
+/bin/mount -n -t ramfs ramfs /tmp
+/bin/mount -n -t sysfs none /sys
+/bin/mount -n -t ramfs none /dev
+
+/bin/mkdir /var/tmp
+/bin/mkdir /var/modules
+/bin/mkdir /var/run
+/bin/mkdir /var/log
+/bin/mkdir -p /dev/pts                    #telnet服务需要
+/bin/mkdir -p /dev/shm                    #telnet服务需要
+# 启动mdev在/dev下自动创建设备文件节点
+/sbin/mdev -s
+/bin/mount -a
+
+ifup -a

@@ -1,0 +1,21 @@
+#!/bin/sh
+
+cat /proc/kallsyms > /tmp/kallsyms
+#把 kallsyms 的内容保存到了 /tmp/kallsyms 中，那么我们就能从 /tmp/kallsyms 中读取 commit_creds，prepare_kernel_cred 的函数的地址了。
+echo 1 > /proc/sys/kernel/kptr_restrict
+#把 kptr_restrict 设为 1，这样就不能通过 /proc/kallsyms 查看函数地址了，但第 9 行已经把其中的信息保存到了一个可读的文件中，这句就无关紧要了
+echo 1 > /proc/sys/kernel/dmesg_restrict
+#把 dmesg_restrict 设为 1，这样就不能通过 dmesg 查看 kernel 的信息了(fprint)
+ifconfig lo up
+ifconfig eth0 up
+udhcpc -i eth0
+ifconfig eth0 10.0.2.15 netmask 255.255.255.0
+route add default gw 10.0.2.2
+#insmod /core.ko
+#poweroff -d 120 -f &
+#设置了定时关机，为了避免做题时产生干扰，直接把这句删掉然后重新打包
+#setsid /bin/cttyhack setuidgid 1000 /bin/sh
+#echo 'sh end!\n'
+#umount /proc
+#umount /sys
+#poweroff -d 0  -f
