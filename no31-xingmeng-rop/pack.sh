@@ -2,6 +2,7 @@
 
 
 mkdir /tmp/rootfs_tmp
+cp -r ../template/rootfs/* /tmp/rootfs_tmp
 cp -r ../_install/* /tmp/rootfs_tmp
 cp -r ../env/bin_root/* /tmp/rootfs_tmp
 cp -r rootfs/* /tmp/rootfs_tmp

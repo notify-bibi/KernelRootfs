@@ -19,6 +19,9 @@ mount -t tmpfs none /tmp
 mdev -s
 
 insmod /test_src.ko
+depmod -a
+# modprobe modname
+
 chmod 666 /dev/test
 
 echo -e "Boot took $(cut -d' ' -f1 /proc/uptime) seconds"
